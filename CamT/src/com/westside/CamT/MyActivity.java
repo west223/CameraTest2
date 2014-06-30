@@ -5,8 +5,11 @@ import android.content.pm.ActivityInfo;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.view.Display;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.WindowManager;
 
 import java.io.IOException;
 
@@ -21,7 +24,7 @@ public class MyActivity extends Activity implements SurfaceHolder.Callback {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         getWindow().setFormat(PixelFormat.UNKNOWN);
         surfaceView = (SurfaceView)findViewById(R.id.surfaceView);
@@ -40,6 +43,18 @@ public class MyActivity extends Activity implements SurfaceHolder.Callback {
         if(previewing){
             camera.stopPreview();
             previewing = false;
+        }
+
+        Camera.Parameters parameters = camera.getParameters();
+        Display display = ((WindowManager)getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+
+        switch(display.getRotation()) {
+            case Surface.ROTATION_0:
+                camera.setDisplayOrientation(90);
+                break;
+            case Surface.ROTATION_270:
+                parameters.setPreviewSize(width, height);
+                break;
         }
 
         if(camera != null){

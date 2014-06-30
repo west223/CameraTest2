@@ -6,7 +6,15 @@
         >
     <SurfaceView
             android:layout_width="fill_parent"
-            android:layout_height="250dp"
-            android:id="@+id/surfaceView"/>
+            android:layout_height="fill_parent"
+            android:id="@+id/surfaceView"
+            android:layout_weight="1"/>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+
+        </FrameLayout>
 </LinearLayout>
 
